@@ -22,6 +22,7 @@
 		6CA752798939850AB805905E /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AB196A92F41FEEC69DE0BB /* SessionStore.swift */; };
 		7D99657535508D606210705D /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A2A1FB283CF404D7C7A44 /* AuthModels.swift */; };
 		7E4382C6002A1DC834528146 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDDE8AF11716864B6C012AB /* APIClient.swift */; };
+		86EBC5C76BFC3087377B88B0 /* TextFieldRowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01588697632EF230A3A55DB /* TextFieldRowStyle.swift */; };
 		8E0B1487C52A4CECBD7B3CAD /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6CF63C7754EA5D7B37936D /* RootView.swift */; };
 		9EA17F0D401BE5AC6F0EA40B /* MapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9585AFAF0F17A28B03A67CB /* MapViewModelTests.swift */; };
 		B19C7D148254C6024860463A /* ModelDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */; };
@@ -64,6 +65,7 @@
 		910020248EDC4434A8FA207B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		94053C6D9F1B59CF1A2CE045 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 		9F93A6DC7AFC1383B7DBD337 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		A01588697632EF230A3A55DB /* TextFieldRowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRowStyle.swift; sourceTree = "<group>"; };
 		B723C9CCD8937364622F5652 /* GeomapTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GeomapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7D2E1B23050BC8831957BE6 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodingTests.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			children = (
 				7F9D7D27DC2813AA894E816F /* AvatarView.swift */,
 				45BA23C4A6E582903128E607 /* FriendStyle.swift */,
+				A01588697632EF230A3A55DB /* TextFieldRowStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				1B698405D9E81ECAABDDEEDE /* MapViewModel.swift in Sources */,
 				8E0B1487C52A4CECBD7B3CAD /* RootView.swift in Sources */,
 				6CA752798939850AB805905E /* SessionStore.swift in Sources */,
+				86EBC5C76BFC3087377B88B0 /* TextFieldRowStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
