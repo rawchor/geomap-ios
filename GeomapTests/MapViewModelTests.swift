@@ -23,7 +23,7 @@ final class MapViewModelTests: XCTestCase {
         MockURLProtocol.requestHandler = { request in
             if request.url!.path == "/friends/nearby" {
                 let body = """
-                [{"userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","displayName":"Friend","latitude":1.0,"longitude":2.0,"degree":"FIRST_DEGREE"}]
+                [{"userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","displayName":"Friend","latitude":1.0,"longitude":2.0,"degree":"FIRST_DEGREE","locked":false}]
                 """.data(using: .utf8)!
                 return (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, body)
             } else {

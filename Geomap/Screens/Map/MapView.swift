@@ -31,14 +31,26 @@ struct MapView: View {
                 }
 
                 ForEach(viewModel.friends) { friend in
-                    Annotation(friend.displayName, coordinate: friend.coordinate) {
+                    // A locked preview shouldn't reveal who it is via the
+                    // name label — the faded avatar alone is the teaser;
+                    // printing their name right under it would give away
+                    // the exact identity opacity is meant to obscure.
+                    Annotation(friend.locked ? "" : friend.displayName, coordinate: friend.coordinate) {
                         AvatarView(
                             photoURL: friend.profilePhotoUrl,
                             displayName: friend.displayName,
                             ringColor: friend.degree.ringColor,
                             diameter: 40
                         )
-                        .onTapGesture { viewModel.selectedFriend = friend }
+                        .opacity(friend.locked ? 0.35 : 1.0)
+                        .onTapGesture {
+                            // Locked previews have no status to show and
+                            // aren't a real friend interaction yet — a
+                            // real friend of a FREE-tier user just outside
+                            // their radius, shown as an upsell teaser.
+                            guard !friend.locked else { return }
+                            viewModel.selectedFriend = friend
+                        }
                     }
                 }
             }

@@ -36,7 +36,7 @@ final class SessionStoreTests: XCTestCase {
         keychain.saveToken("valid-token")
         let store = makeStore { request in
             let body = """
-            {"token":"valid-token","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A"}
+            {"token":"valid-token","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A","subscriptionTier":"FREE"}
             """.data(using: .utf8)!
             return (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, body)
         }
@@ -65,7 +65,7 @@ final class SessionStoreTests: XCTestCase {
         keychain.deleteToken()
         let store = makeStore { request in
             let body = """
-            {"token":"fresh-token","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A"}
+            {"token":"fresh-token","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A","subscriptionTier":"FREE"}
             """.data(using: .utf8)!
             return (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, body)
         }

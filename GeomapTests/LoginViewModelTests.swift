@@ -34,7 +34,7 @@ final class LoginViewModelTests: XCTestCase {
     func testSubmitSuccessClearsErrorMessage() async {
         let store = makeSessionStore { request in
             let body = """
-            {"token":"t","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A"}
+            {"token":"t","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A","subscriptionTier":"FREE"}
             """.data(using: .utf8)!
             return (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, body)
         }

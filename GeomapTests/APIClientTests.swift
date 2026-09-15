@@ -18,7 +18,7 @@ final class APIClientTests: XCTestCase {
     func testLoginSuccessDecodesAuthResponse() async throws {
         MockURLProtocol.requestHandler = { request in
             let body = """
-            {"token":"abc","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A"}
+            {"token":"abc","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"a@b.com","displayName":"A","subscriptionTier":"FREE"}
             """.data(using: .utf8)!
             let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, body)
