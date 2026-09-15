@@ -1,0 +1,505 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		003D99E31228A74280278972 /* SessionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEA32FDA163D03181652839 /* SessionStoreTests.swift */; };
+		0CD318037BDCF8A1E95A1839 /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94053C6D9F1B59CF1A2CE045 /* LoginViewModelTests.swift */; };
+		1C29FB265DC8F7103AB49F2C /* GeomapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B9173C8479C5B8D7F7BE2 /* GeomapApp.swift */; };
+		32B98EA281354BC2D4C39D74 /* LocationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5D2060D4F2FB23184D0EAB /* LocationModels.swift */; };
+		34B26BE38BFCF8D353D15C67 /* KeychainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1AA914B6B1EF4C3D17B09D /* KeychainServiceTests.swift */; };
+		3585616C2BCFBCFAE1C3B83A /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FBDC933D637F6E57229F5 /* APIError.swift */; };
+		38E7F753D3171803D3ADFFDE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C629B8AE44C0044B203B06C5 /* LoginViewModel.swift */; };
+		4717E9AF9B5D46594882D231 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D2E1B23050BC8831957BE6 /* Config.swift */; };
+		5F60834AD6C1CE914E6021C8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F2976BD4B92545F7C87209 /* LoginView.swift */; };
+		6CA752798939850AB805905E /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AB196A92F41FEEC69DE0BB /* SessionStore.swift */; };
+		7D99657535508D606210705D /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A2A1FB283CF404D7C7A44 /* AuthModels.swift */; };
+		7E4382C6002A1DC834528146 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDDE8AF11716864B6C012AB /* APIClient.swift */; };
+		8E0B1487C52A4CECBD7B3CAD /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6CF63C7754EA5D7B37936D /* RootView.swift */; };
+		B19C7D148254C6024860463A /* ModelDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */; };
+		BFE1DA70A73080DC52AD9890 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CEFEC2080B3D4121460ACD /* APIClientTests.swift */; };
+		C93BB3FBC8331B00CAEA5273 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */; };
+		CB0063CBD614242F820160B9 /* FriendModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E34F11321EC6469573B5F0D /* FriendModels.swift */; };
+		E7A9CA74BABEEEEE3F08BD63 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688DFC494F60805D7D2F8419 /* KeychainService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6A59E7946BAC311ACF28188A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39A02CCDF20C09BCF260086B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F34A5A82B4368320D20A214;
+			remoteInfo = Geomap;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		097A2A1FB283CF404D7C7A44 /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModels.swift; sourceTree = "<group>"; };
+		0BDDE8AF11716864B6C012AB /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		1D6FBDC933D637F6E57229F5 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		21AB196A92F41FEEC69DE0BB /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
+		36CEFEC2080B3D4121460ACD /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		3E9B9173C8479C5B8D7F7BE2 /* GeomapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeomapApp.swift; sourceTree = "<group>"; };
+		422EFE834E582E233D263519 /* Geomap.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Geomap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55A432E302F9D4C2CBF1ECDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5E34F11321EC6469573B5F0D /* FriendModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModels.swift; sourceTree = "<group>"; };
+		63F2976BD4B92545F7C87209 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		688DFC494F60805D7D2F8419 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		7AEA32FDA163D03181652839 /* SessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStoreTests.swift; sourceTree = "<group>"; };
+		94053C6D9F1B59CF1A2CE045 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
+		B723C9CCD8937364622F5652 /* GeomapTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GeomapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7D2E1B23050BC8831957BE6 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDecodingTests.swift; sourceTree = "<group>"; };
+		C629B8AE44C0044B203B06C5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		CF5D2060D4F2FB23184D0EAB /* LocationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
+		EA1AA914B6B1EF4C3D17B09D /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceTests.swift; sourceTree = "<group>"; };
+		EF6CF63C7754EA5D7B37936D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		06E834E37906E95CC98CCC22 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				688DFC494F60805D7D2F8419 /* KeychainService.swift */,
+				21AB196A92F41FEEC69DE0BB /* SessionStore.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		0733B67CB780086E05C793B9 /* Geomap */ = {
+			isa = PBXGroup;
+			children = (
+				3B3A6D79699DE59B68515A0D /* App */,
+				06E834E37906E95CC98CCC22 /* Auth */,
+				828B08F39A5D6540C8C1565C /* Models */,
+				12F177E3B3BEC881DD92F899 /* Networking */,
+				3A123809D50FBA5130072377 /* Screens */,
+			);
+			path = Geomap;
+			sourceTree = "<group>";
+		};
+		12F177E3B3BEC881DD92F899 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				0BDDE8AF11716864B6C012AB /* APIClient.swift */,
+				1D6FBDC933D637F6E57229F5 /* APIError.swift */,
+				B7D2E1B23050BC8831957BE6 /* Config.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		3A123809D50FBA5130072377 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				C57F9CA15DD4060928C5483E /* Login */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3B3A6D79699DE59B68515A0D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3E9B9173C8479C5B8D7F7BE2 /* GeomapApp.swift */,
+				55A432E302F9D4C2CBF1ECDA /* Info.plist */,
+				EF6CF63C7754EA5D7B37936D /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		828B08F39A5D6540C8C1565C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				097A2A1FB283CF404D7C7A44 /* AuthModels.swift */,
+				5E34F11321EC6469573B5F0D /* FriendModels.swift */,
+				CF5D2060D4F2FB23184D0EAB /* LocationModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ADFAF7137D8CB715D8E94878 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				422EFE834E582E233D263519 /* Geomap.app */,
+				B723C9CCD8937364622F5652 /* GeomapTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C57F9CA15DD4060928C5483E /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				63F2976BD4B92545F7C87209 /* LoginView.swift */,
+				C629B8AE44C0044B203B06C5 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		E9FBBC4F064EC70821981402 /* GeomapTests */ = {
+			isa = PBXGroup;
+			children = (
+				36CEFEC2080B3D4121460ACD /* APIClientTests.swift */,
+				EA1AA914B6B1EF4C3D17B09D /* KeychainServiceTests.swift */,
+				94053C6D9F1B59CF1A2CE045 /* LoginViewModelTests.swift */,
+				CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */,
+				C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */,
+				7AEA32FDA163D03181652839 /* SessionStoreTests.swift */,
+			);
+			path = GeomapTests;
+			sourceTree = "<group>";
+		};
+		FA45DEDEA2B2F7E6161CAA08 = {
+			isa = PBXGroup;
+			children = (
+				0733B67CB780086E05C793B9 /* Geomap */,
+				E9FBBC4F064EC70821981402 /* GeomapTests */,
+				ADFAF7137D8CB715D8E94878 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8F34A5A82B4368320D20A214 /* Geomap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F3A0B69D94C2B33B6709921F /* Build configuration list for PBXNativeTarget "Geomap" */;
+			buildPhases = (
+				4B73B788CE41E08F2F2BB395 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Geomap;
+			packageProductDependencies = (
+			);
+			productName = Geomap;
+			productReference = 422EFE834E582E233D263519 /* Geomap.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9A73ED031BF6AB69E4B6E7A9 /* GeomapTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4909F55185E27EDE7E22FCE7 /* Build configuration list for PBXNativeTarget "GeomapTests" */;
+			buildPhases = (
+				30D7201E2F70CF83FB95B7DB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81AD2699D92786B5BD4A7E65 /* PBXTargetDependency */,
+			);
+			name = GeomapTests;
+			packageProductDependencies = (
+			);
+			productName = GeomapTests;
+			productReference = B723C9CCD8937364622F5652 /* GeomapTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		39A02CCDF20C09BCF260086B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = E94DB916045182171026BA6E /* Build configuration list for PBXProject "Geomap" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FA45DEDEA2B2F7E6161CAA08;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = ADFAF7137D8CB715D8E94878 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8F34A5A82B4368320D20A214 /* Geomap */,
+				9A73ED031BF6AB69E4B6E7A9 /* GeomapTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30D7201E2F70CF83FB95B7DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BFE1DA70A73080DC52AD9890 /* APIClientTests.swift in Sources */,
+				34B26BE38BFCF8D353D15C67 /* KeychainServiceTests.swift in Sources */,
+				0CD318037BDCF8A1E95A1839 /* LoginViewModelTests.swift in Sources */,
+				C93BB3FBC8331B00CAEA5273 /* MockURLProtocol.swift in Sources */,
+				B19C7D148254C6024860463A /* ModelDecodingTests.swift in Sources */,
+				003D99E31228A74280278972 /* SessionStoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B73B788CE41E08F2F2BB395 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E4382C6002A1DC834528146 /* APIClient.swift in Sources */,
+				3585616C2BCFBCFAE1C3B83A /* APIError.swift in Sources */,
+				7D99657535508D606210705D /* AuthModels.swift in Sources */,
+				4717E9AF9B5D46594882D231 /* Config.swift in Sources */,
+				CB0063CBD614242F820160B9 /* FriendModels.swift in Sources */,
+				1C29FB265DC8F7103AB49F2C /* GeomapApp.swift in Sources */,
+				E7A9CA74BABEEEEE3F08BD63 /* KeychainService.swift in Sources */,
+				32B98EA281354BC2D4C39D74 /* LocationModels.swift in Sources */,
+				5F60834AD6C1CE914E6021C8 /* LoginView.swift in Sources */,
+				38E7F753D3171803D3ADFFDE /* LoginViewModel.swift in Sources */,
+				8E0B1487C52A4CECBD7B3CAD /* RootView.swift in Sources */,
+				6CA752798939850AB805905E /* SessionStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		81AD2699D92786B5BD4A7E65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F34A5A82B4368320D20A214 /* Geomap */;
+			targetProxy = 6A59E7946BAC311ACF28188A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1122522F4DC977D229F334E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.geomap.ios.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Geomap.app/Geomap";
+			};
+			name = Release;
+		};
+		53013CF426921D34A0C25E20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7A3CC2EBC72F2E2B8F74DBEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.geomap.ios.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Geomap.app/Geomap";
+			};
+			name = Debug;
+		};
+		7CDDA46136A0660F33D7DDD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Geomap/App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = "0.1.0-SNAPSHOT";
+				PRODUCT_BUNDLE_IDENTIFIER = com.geomap.ios;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		D3FC428CB5EA4464DA9DAE3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Geomap/App/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = "0.1.0-SNAPSHOT";
+				PRODUCT_BUNDLE_IDENTIFIER = com.geomap.ios;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D47AA2F928D970929450028F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4909F55185E27EDE7E22FCE7 /* Build configuration list for PBXNativeTarget "GeomapTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A3CC2EBC72F2E2B8F74DBEE /* Debug */,
+				1122522F4DC977D229F334E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E94DB916045182171026BA6E /* Build configuration list for PBXProject "Geomap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53013CF426921D34A0C25E20 /* Debug */,
+				D47AA2F928D970929450028F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F3A0B69D94C2B33B6709921F /* Build configuration list for PBXNativeTarget "Geomap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3FC428CB5EA4464DA9DAE3A /* Debug */,
+				7CDDA46136A0660F33D7DDD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 39A02CCDF20C09BCF260086B /* Project object */;
+}
