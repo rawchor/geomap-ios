@@ -1,0 +1,50 @@
+name: Geomap
+options:
+  bundleIdPrefix: com.geomap
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+configs:
+  Debug: debug
+  Release: release
+targets:
+  Geomap:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: Geomap
+    info:
+      path: Geomap/App/Info.plist
+      properties:
+        UILaunchScreen: {}
+        NSLocationWhenInUseUsageDescription: "Geomap uses your location to show you on the map and find nearby friends."
+        UIBackgroundModes:
+          - location
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.geomap.ios
+        MARKETING_VERSION: "0.1.0-SNAPSHOT"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+    scheme:
+      testTargets:
+        - GeomapTests
+      config: Debug
+  GeomapTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: GeomapTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.geomap.ios.tests
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: Geomap
+    scheme:
+      testTargets:
+        - GeomapTests
+      config: Debug

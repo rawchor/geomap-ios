@@ -1,0 +1,18 @@
+# Xcode
+.DS_Store
+build/
+DerivedData/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/project.xcworkspace
+!*.xcodeproj/project.xcworkspace/**
+!*.xcodeproj/xcshareddata
+!*.xcodeproj/xcshareddata/**
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcuserstate
+xcuserdata/
+.swiftpm/
+
+# XcodeGen: project.pbxproj and the shared workspace/scheme data are
+# generated from project.yml, but we keep them checked in for a clonable,
+# buildable repo without requiring xcodegen.
