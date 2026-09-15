@@ -29,6 +29,11 @@ struct NearbyFriendResponse: Decodable, Identifiable {
     /// Only present for second-degree friends ("Friends with {mutualFriendName}").
     let mutualFriendName: String?
     let status: FriendStatus?
+    /// A FREE-tier user's confirmed friend outside the 20km radius: included
+    /// as an upsell teaser with real position/photo but `status` always nil
+    /// (withheld server-side, not just a client convention). PREMIUM
+    /// accounts never receive `locked: true`.
+    let locked: Bool
 
     var id: UUID { userId }
 }

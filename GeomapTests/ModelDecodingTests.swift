@@ -8,7 +8,8 @@ final class ModelDecodingTests: XCTestCase {
             "token": "abc123",
             "userId": "d39ad7d6-d739-4874-b716-ad81ded6a1f5",
             "email": "test@example.com",
-            "displayName": "Test User"
+            "displayName": "Test User",
+            "subscriptionTier": "PREMIUM"
         }
         """.data(using: .utf8)!
 
@@ -18,6 +19,28 @@ final class ModelDecodingTests: XCTestCase {
         XCTAssertEqual(response.email, "test@example.com")
         XCTAssertEqual(response.displayName, "Test User")
         XCTAssertEqual(response.userId.uuidString.lowercased(), "d39ad7d6-d739-4874-b716-ad81ded6a1f5")
+        XCTAssertEqual(response.subscriptionTier, .premium)
+    }
+
+    func testAuthResponseWithNullSubscriptionTierDefaultsUserToFree() throws {
+        // Accounts created before this field existed come back with a null
+        // tier (a backend data gap) rather than a backfilled "FREE" — this
+        // must decode successfully and default sensibly, not crash login.
+        let json = """
+        {
+            "token": "abc123",
+            "userId": "d39ad7d6-d739-4874-b716-ad81ded6a1f5",
+            "email": "test@example.com",
+            "displayName": "Test User",
+            "subscriptionTier": null
+        }
+        """.data(using: .utf8)!
+
+        let response = try JSONDecoder().decode(AuthResponse.self, from: json)
+        XCTAssertNil(response.subscriptionTier)
+
+        let user = User(from: response)
+        XCTAssertEqual(user.subscriptionTier, .free)
     }
 
     func testNearbyFriendResponseDecodesWithNullStatus() throws {
@@ -30,7 +53,8 @@ final class ModelDecodingTests: XCTestCase {
             "longitude": -0.1,
             "degree": "SECOND_DEGREE",
             "mutualFriendName": "Mutual Person",
-            "status": null
+            "status": null,
+            "locked": false
         }
         """.data(using: .utf8)!
 
@@ -40,6 +64,28 @@ final class ModelDecodingTests: XCTestCase {
         XCTAssertEqual(friend.mutualFriendName, "Mutual Person")
         XCTAssertNil(friend.status)
         XCTAssertNil(friend.profilePhotoUrl)
+        XCTAssertFalse(friend.locked)
+    }
+
+    func testNearbyFriendResponseDecodesLockedPreview() throws {
+        let json = """
+        {
+            "userId": "d39ad7d6-d739-4874-b716-ad81ded6a1f5",
+            "displayName": "Julia",
+            "profilePhotoUrl": null,
+            "latitude": 52.5441,
+            "longitude": 21.0122,
+            "degree": "SECOND_DEGREE",
+            "mutualFriendName": "Anna",
+            "status": null,
+            "locked": true
+        }
+        """.data(using: .utf8)!
+
+        let friend = try JSONDecoder().decode(NearbyFriendResponse.self, from: json)
+
+        XCTAssertTrue(friend.locked)
+        XCTAssertNil(friend.status)
     }
 
     func testFriendStatusDecodesPresetAndCustomText() throws {
