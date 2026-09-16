@@ -78,6 +78,24 @@ final class SessionStoreTests: XCTestCase {
         }
     }
 
+    func testRegisterSuccessSavesTokenAndUpdatesState() async throws {
+        keychain.deleteToken()
+        let store = makeStore { request in
+            let body = """
+            {"token":"new-token","userId":"d39ad7d6-d739-4874-b716-ad81ded6a1f5","email":"new@b.com","displayName":"New","subscriptionTier":"FREE"}
+            """.data(using: .utf8)!
+            return (HTTPURLResponse(url: request.url!, statusCode: 201, httpVersion: nil, headerFields: nil)!, body)
+        }
+
+        try await store.register(displayName: "New", email: "new@b.com", password: "password123")
+
+        XCTAssertEqual(keychain.getToken(), "new-token")
+        guard case .loggedIn(let user) = store.authState else {
+            return XCTFail("Expected .loggedIn, got \(store.authState)")
+        }
+        XCTAssertEqual(user.displayName, "New")
+    }
+
     func testLoginFailureThrowsAndDoesNotSaveToken() async {
         keychain.deleteToken()
         let store = makeStore { request in

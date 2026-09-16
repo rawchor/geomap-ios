@@ -17,6 +17,7 @@
 		3585616C2BCFBCFAE1C3B83A /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6FBDC933D637F6E57229F5 /* APIError.swift */; };
 		38E7F753D3171803D3ADFFDE /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C629B8AE44C0044B203B06C5 /* LoginViewModel.swift */; };
 		4717E9AF9B5D46594882D231 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D2E1B23050BC8831957BE6 /* Config.swift */; };
+		54E0CE6996B1DF53084B4B7A /* RegisterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5518B452B6EB98079B02E5 /* RegisterViewModelTests.swift */; };
 		5F60834AD6C1CE914E6021C8 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F2976BD4B92545F7C87209 /* LoginView.swift */; };
 		62664B21B7508D9D3C1842AB /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93A6DC7AFC1383B7DBD337 /* LocationService.swift */; };
 		6CA752798939850AB805905E /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AB196A92F41FEEC69DE0BB /* SessionStore.swift */; };
@@ -31,8 +32,10 @@
 		C93BB3FBC8331B00CAEA5273 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */; };
 		CB0063CBD614242F820160B9 /* FriendModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E34F11321EC6469573B5F0D /* FriendModels.swift */; };
 		CB81594D2FA8E279D21D4F01 /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F997973BB7A07595E546CC /* FriendDetailView.swift */; };
+		D161991CC27D06673235520D /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D008FD426793C866D1D7 /* RegisterViewModel.swift */; };
 		E7A9CA74BABEEEEE3F08BD63 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688DFC494F60805D7D2F8419 /* KeychainService.swift */; };
 		F1B1ADF76D58F2E323BF1035 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D7D27DC2813AA894E816F /* AvatarView.swift */; };
+		F39B3ECBD997A5E9A730A8B8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95673F4D6AA52E0D2E4CA0C2 /* RegisterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,7 @@
 		3E9B9173C8479C5B8D7F7BE2 /* GeomapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeomapApp.swift; sourceTree = "<group>"; };
 		422EFE834E582E233D263519 /* Geomap.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Geomap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BA23C4A6E582903128E607 /* FriendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendStyle.swift; sourceTree = "<group>"; };
+		46D3D008FD426793C866D1D7 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		55A432E302F9D4C2CBF1ECDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5E34F11321EC6469573B5F0D /* FriendModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendModels.swift; sourceTree = "<group>"; };
 		63F2976BD4B92545F7C87209 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -64,6 +68,7 @@
 		7F9D7D27DC2813AA894E816F /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		910020248EDC4434A8FA207B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		94053C6D9F1B59CF1A2CE045 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
+		95673F4D6AA52E0D2E4CA0C2 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		9F93A6DC7AFC1383B7DBD337 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		A01588697632EF230A3A55DB /* TextFieldRowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldRowStyle.swift; sourceTree = "<group>"; };
 		B723C9CCD8937364622F5652 /* GeomapTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GeomapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +78,7 @@
 		CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		CF5D2060D4F2FB23184D0EAB /* LocationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
 		EA1AA914B6B1EF4C3D17B09D /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceTests.swift; sourceTree = "<group>"; };
+		EA5518B452B6EB98079B02E5 /* RegisterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModelTests.swift; sourceTree = "<group>"; };
 		EF6CF63C7754EA5D7B37936D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		F9585AFAF0F17A28B03A67CB /* MapViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,6 +133,7 @@
 				A77099DBBEBF67CBAD7A5FA6 /* FriendDetail */,
 				C57F9CA15DD4060928C5483E /* Login */,
 				46B6F33F15A802B7451F5008 /* Map */,
+				A1E7FB6BFCDB29F30133DA58 /* Register */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -168,6 +175,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A1E7FB6BFCDB29F30133DA58 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				95673F4D6AA52E0D2E4CA0C2 /* RegisterView.swift */,
+				46D3D008FD426793C866D1D7 /* RegisterViewModel.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		A77099DBBEBF67CBAD7A5FA6 /* FriendDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +219,7 @@
 				F9585AFAF0F17A28B03A67CB /* MapViewModelTests.swift */,
 				CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */,
 				C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */,
+				EA5518B452B6EB98079B02E5 /* RegisterViewModelTests.swift */,
 				7AEA32FDA163D03181652839 /* SessionStoreTests.swift */,
 			);
 			path = GeomapTests;
@@ -297,6 +314,7 @@
 				9EA17F0D401BE5AC6F0EA40B /* MapViewModelTests.swift in Sources */,
 				C93BB3FBC8331B00CAEA5273 /* MockURLProtocol.swift in Sources */,
 				B19C7D148254C6024860463A /* ModelDecodingTests.swift in Sources */,
+				54E0CE6996B1DF53084B4B7A /* RegisterViewModelTests.swift in Sources */,
 				003D99E31228A74280278972 /* SessionStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +339,8 @@
 				38E7F753D3171803D3ADFFDE /* LoginViewModel.swift in Sources */,
 				31E910C8CD75C31D3D6753A3 /* MapView.swift in Sources */,
 				1B698405D9E81ECAABDDEEDE /* MapViewModel.swift in Sources */,
+				F39B3ECBD997A5E9A730A8B8 /* RegisterView.swift in Sources */,
+				D161991CC27D06673235520D /* RegisterViewModel.swift in Sources */,
 				8E0B1487C52A4CECBD7B3CAD /* RootView.swift in Sources */,
 				6CA752798939850AB805905E /* SessionStore.swift in Sources */,
 				86EBC5C76BFC3087377B88B0 /* TextFieldRowStyle.swift in Sources */,

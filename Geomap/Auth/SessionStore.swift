@@ -41,6 +41,14 @@ final class SessionStore: ObservableObject {
         authState = .loggedIn(User(from: response))
     }
 
+    func register(displayName: String, email: String, password: String) async throws {
+        let response = try await apiClient.register(
+            RegisterRequest(displayName: displayName, email: email, password: password)
+        )
+        keychain.saveToken(response.token)
+        authState = .loggedIn(User(from: response))
+    }
+
     func logout() {
         keychain.deleteToken()
         authState = .loggedOut
