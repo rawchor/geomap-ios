@@ -121,17 +121,17 @@ final class APIClient {
         guard let body = try? decoder.decode(BackendErrorBody.self, from: data) else {
             return nil
         }
-        return body.message ?? body.error
+        return body.message
     }
 
     private func extractFieldErrors(from data: Data) -> [String: String] {
         guard let body = try? decoder.decode(BackendErrorBody.self, from: data) else {
             return [:]
         }
-        if let errors = body.errors, !errors.isEmpty {
-            return errors
+        if let fieldErrors = body.fieldErrors, !fieldErrors.isEmpty {
+            return fieldErrors
         }
-        if let message = body.message ?? body.error {
+        if let message = body.message {
             return ["_": message]
         }
         return [:]

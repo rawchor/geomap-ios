@@ -25,11 +25,11 @@ enum APIError: Error {
     }
 }
 
-/// Lenient shape for whatever error body the backend sends back — the
-/// OpenAPI contract doesn't document error responses, so this tolerates
-/// a few common Spring Boot shapes rather than assuming one exact format.
+/// Matches the verified error envelope in ERROR_SHAPES.md — one consistent
+/// shape across every error case (400/401/409/500 alike), confirmed live
+/// against a running server, not inferred. `fieldErrors` is always present
+/// (never omitted) but only non-null for 400 validation failures.
 struct BackendErrorBody: Decodable {
     let message: String?
-    let error: String?
-    let errors: [String: String]?
+    let fieldErrors: [String: String]?
 }
