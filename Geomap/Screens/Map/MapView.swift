@@ -14,6 +14,7 @@ struct MapView: View {
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var currentRegion: MKCoordinateRegion?
     @State private var hasCenteredOnUser = false
+    @State private var isShowingMyStatus = false
 
     var body: some View {
         ZStack {
@@ -23,7 +24,18 @@ struct MapView: View {
                         .foregroundStyle(Color.black.opacity(0.35))
 
                     Annotation(currentUser.displayName, coordinate: userCoordinate) {
-                        AvatarView(photoURL: nil, displayName: currentUser.displayName, ringColor: .green, diameter: 44)
+                        VStack(spacing: 4) {
+                            AvatarView(photoURL: nil, displayName: currentUser.displayName, ringColor: .green, diameter: 44)
+                            if let statusText = viewModel.myStatus?.displayText {
+                                Text(statusText)
+                                    .font(.caption2)
+                                    .lineLimit(1)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 3)
+                                    .background(Color.blue.opacity(0.15), in: Capsule())
+                            }
+                        }
+                        .onTapGesture { isShowingMyStatus = true }
                     }
                     MapCircle(center: userCoordinate, radius: radiusMeters)
                         .foregroundStyle(.clear)
@@ -78,6 +90,9 @@ struct MapView: View {
         .task {
             locationService.requestPermissionAndStart()
         }
+        .task {
+            await viewModel.refreshMyStatus()
+        }
         .onAppear {
             viewModel.startPolling(
                 locationProvider: { locationService.currentLocation?.coordinate },
@@ -101,6 +116,11 @@ struct MapView: View {
         }
         .sheet(item: $viewModel.selectedFriend) { friend in
             FriendDetailView(friend: friend)
+        }
+        .sheet(isPresented: $isShowingMyStatus, onDismiss: {
+            Task { await viewModel.refreshMyStatus() }
+        }) {
+            MyStatusView()
         }
     }
 

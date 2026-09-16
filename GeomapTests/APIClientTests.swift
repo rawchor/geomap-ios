@@ -73,6 +73,20 @@ final class APIClientTests: XCTestCase {
         }
     }
 
+    func testMyStatusWithEmptyResponseBodyDecodesAsNoStatusSet() async throws {
+        // Verified live: GET /status/me returns Content-Length: 0 (not
+        // `{}`) when no status is set — undocumented in the OpenAPI
+        // schema. Must decode successfully rather than throw .decoding.
+        MockURLProtocol.requestHandler = { request in
+            (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data())
+        }
+
+        let client = makeClient(token: "test-token")
+        let status = try await client.myStatus()
+
+        XCTAssertNil(status.displayText)
+    }
+
     func testAuthenticatedEndpointAttachesBearerToken() async throws {
         MockURLProtocol.requestHandler = { request in
             XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer test-token")

@@ -98,4 +98,29 @@ final class MapViewModelTests: XCTestCase {
 
         XCTAssertTrue(unauthorizedCalled)
     }
+
+    func testRefreshMyStatusPopulatesDisplayText() async {
+        MockURLProtocol.requestHandler = { request in
+            let body = """
+            {"presetOptionId":null,"presetLabel":null,"presetEmoji":null,"customText":"Reading"}
+            """.data(using: .utf8)!
+            return (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, body)
+        }
+
+        let viewModel = makeViewModel()
+        await viewModel.refreshMyStatus()
+
+        XCTAssertEqual(viewModel.myStatus?.displayText, "Reading")
+    }
+
+    func testRefreshMyStatusFailureLeavesStatusNilWithoutThrowing() async {
+        MockURLProtocol.requestHandler = { request in
+            (HTTPURLResponse(url: request.url!, statusCode: 500, httpVersion: nil, headerFields: nil)!, Data())
+        }
+
+        let viewModel = makeViewModel()
+        await viewModel.refreshMyStatus()
+
+        XCTAssertNil(viewModel.myStatus)
+    }
 }

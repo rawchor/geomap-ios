@@ -88,15 +88,59 @@ final class ModelDecodingTests: XCTestCase {
         XCTAssertNil(friend.status)
     }
 
-    func testFriendStatusDecodesPresetAndCustomText() throws {
+    func testStatusResponseDecodesPresetFields() throws {
         let json = """
-        { "preset": "GRABBING_COFFEE", "customText": "at the corner cafe" }
+        {
+            "presetOptionId": "d39ad7d6-d739-4874-b716-ad81ded6a1f5",
+            "presetLabel": "Grabbing coffee",
+            "presetEmoji": "☕",
+            "customText": null
+        }
         """.data(using: .utf8)!
 
-        let status = try JSONDecoder().decode(FriendStatus.self, from: json)
+        let status = try JSONDecoder().decode(StatusResponse.self, from: json)
 
-        XCTAssertEqual(status.preset, .grabbingCoffee)
-        XCTAssertEqual(status.customText, "at the corner cafe")
+        XCTAssertEqual(status.presetLabel, "Grabbing coffee")
+        XCTAssertEqual(status.presetEmoji, "☕")
+        XCTAssertNil(status.customText)
+        XCTAssertEqual(status.displayText, "☕ Grabbing coffee")
+    }
+
+    func testStatusResponseDisplayTextPrefersCustomText() {
+        let status = StatusResponse(presetOptionId: nil, presetLabel: nil, presetEmoji: nil, customText: "at the corner cafe")
+        XCTAssertEqual(status.displayText, "at the corner cafe")
+    }
+
+    func testStatusResponseDisplayTextNilWhenEmpty() {
+        let status = StatusResponse(presetOptionId: nil, presetLabel: nil, presetEmoji: nil, customText: nil)
+        XCTAssertNil(status.displayText)
+    }
+
+    func testStatusPresetOptionResponseDecodesContractShape() throws {
+        let json = """
+        { "id": "d39ad7d6-d739-4874-b716-ad81ded6a1f5", "label": "Free to hang", "emoji": "🙌" }
+        """.data(using: .utf8)!
+
+        let preset = try JSONDecoder().decode(StatusPresetOptionResponse.self, from: json)
+
+        XCTAssertEqual(preset.label, "Free to hang")
+        XCTAssertEqual(preset.emoji, "🙌")
+    }
+
+    func testStatusUpdateRequestEncodesExplicitNullsWhenClearing() throws {
+        // The backend's "clear status" semantics require both keys present
+        // with null, not omitted — Swift's default Optional encoding would
+        // otherwise silently drop them via encodeIfPresent.
+        let request = StatusUpdateRequest(presetOptionId: nil, customText: nil, durationMinutes: nil)
+        let data = try JSONEncoder().encode(request)
+        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+        XCTAssertNotNil(json)
+        XCTAssertTrue(json?.keys.contains("presetOptionId") ?? false)
+        XCTAssertTrue(json?.keys.contains("customText") ?? false)
+        XCTAssertTrue(json?["presetOptionId"] is NSNull)
+        XCTAssertTrue(json?["customText"] is NSNull)
+        XCTAssertFalse(json?.keys.contains("durationMinutes") ?? true)
     }
 
     func testLocationResponseDecodesFractionalSecondsDate() throws {
