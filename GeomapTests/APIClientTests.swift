@@ -73,6 +73,24 @@ final class APIClientTests: XCTestCase {
         }
     }
 
+    func testChatMessagesBuildsCorrectPathAndQueryItems() async throws {
+        let friendId = UUID()
+        let before = Date(timeIntervalSince1970: 1_700_000_000)
+        MockURLProtocol.requestHandler = { request in
+            XCTAssertEqual(request.url!.path, "/chat/\(friendId)/messages")
+            let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!
+            let queryDict = Dictionary(uniqueKeysWithValues: (components.queryItems ?? []).map { ($0.name, $0.value) })
+            XCTAssertEqual(queryDict["limit"], "20")
+            XCTAssertNotNil(queryDict["before"])
+            return (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, "[]".data(using: .utf8)!)
+        }
+
+        let client = makeClient(token: "test-token")
+        let messages = try await client.chatMessages(friendId: friendId, before: before, limit: 20)
+
+        XCTAssertTrue(messages.isEmpty)
+    }
+
     func testMyStatusWithEmptyResponseBodyDecodesAsNoStatusSet() async throws {
         // Verified live: GET /status/me returns Content-Length: 0 (not
         // `{}`) when no status is set — undocumented in the OpenAPI
