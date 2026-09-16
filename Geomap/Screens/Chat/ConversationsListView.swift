@@ -4,6 +4,7 @@ struct ConversationsListView: View {
     let currentUserId: UUID
 
     @StateObject private var viewModel = ConversationsListViewModel()
+    @EnvironmentObject private var unreadStore: UnreadMessagesStore
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -55,6 +56,12 @@ struct ConversationsListView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
+            }
+            Spacer()
+            if unreadStore.hasUnread(friendId: conversation.friendId) {
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 10, height: 10)
             }
         }
         .padding(.vertical, 4)

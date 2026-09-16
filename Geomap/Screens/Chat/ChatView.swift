@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ChatView: View {
     @StateObject private var viewModel: ChatViewModel
+    @EnvironmentObject private var unreadStore: UnreadMessagesStore
     @FocusState private var draftFocused: Bool
 
     init(friendId: UUID, friendDisplayName: String, currentUserId: UUID) {
@@ -53,6 +54,7 @@ struct ChatView: View {
                     .lineLimit(1...4)
 
                 Button {
+                    unreadStore.recordSentMessage(to: viewModel.friendId)
                     viewModel.send()
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
@@ -67,8 +69,20 @@ struct ChatView: View {
         .task {
             await viewModel.start()
         }
+        .onAppear {
+            unreadStore.currentlyOpenFriendId = viewModel.friendId
+            unreadStore.markRead(friendId: viewModel.friendId)
+        }
         .onDisappear {
             viewModel.stop()
+            // Mark read again on exit, not just on entry: covers anything
+            // received or sent while the chat was open (including your own
+            // outgoing messages, which also advance the conversation's
+            // lastMessageSentAt).
+            unreadStore.markRead(friendId: viewModel.friendId)
+            if unreadStore.currentlyOpenFriendId == viewModel.friendId {
+                unreadStore.currentlyOpenFriendId = nil
+            }
         }
     }
 
