@@ -11,11 +11,17 @@ struct MapView: View {
     @EnvironmentObject private var sessionStore: SessionStore
     @StateObject private var locationService = LocationService()
     @StateObject private var viewModel = MapViewModel()
+    @StateObject private var unreadStore: UnreadMessagesStore
     @State private var cameraPosition: MapCameraPosition = .automatic
     @State private var currentRegion: MKCoordinateRegion?
     @State private var hasCenteredOnUser = false
     @State private var isShowingMyStatus = false
     @State private var isShowingConversations = false
+
+    init(currentUser: User) {
+        self.currentUser = currentUser
+        _unreadStore = StateObject(wrappedValue: UnreadMessagesStore(currentUserId: currentUser.id))
+    }
 
     var body: some View {
         ZStack {
@@ -97,16 +103,22 @@ struct MapView: View {
         .task {
             await viewModel.refreshMyStatus()
         }
+        .task {
+            LocalNotifier.shared.requestAuthorization()
+        }
         .onAppear {
             viewModel.startPolling(
                 locationProvider: { locationService.currentLocation?.coordinate },
                 onUnauthorized: { sessionStore.logout() }
             )
+            unreadStore.startPolling()
         }
         .onDisappear {
             viewModel.stopPolling()
             locationService.stopUpdating()
+            unreadStore.stopPolling()
         }
+        .environmentObject(unreadStore)
         .onChange(of: locationService.currentLocation != nil) { _, hasLocation in
             guard !hasCenteredOnUser, hasLocation, let coordinate = locationService.currentLocation?.coordinate else { return }
             hasCenteredOnUser = true
@@ -120,6 +132,7 @@ struct MapView: View {
         }
         .sheet(item: $viewModel.selectedFriend) { friend in
             FriendDetailView(friend: friend)
+                .environmentObject(unreadStore)
         }
         .sheet(isPresented: $isShowingMyStatus, onDismiss: {
             Task { await viewModel.refreshMyStatus() }
@@ -128,6 +141,7 @@ struct MapView: View {
         }
         .sheet(isPresented: $isShowingConversations) {
             ConversationsListView(currentUserId: currentUser.id)
+                .environmentObject(unreadStore)
         }
     }
 
@@ -247,6 +261,16 @@ struct MapView: View {
                 .font(.headline)
                 .padding(10)
                 .background(.regularMaterial, in: Circle())
+        }
+        .overlay(alignment: .topTrailing) {
+            if unreadStore.unreadCount > 0 {
+                Text("\(unreadStore.unreadCount)")
+                    .font(.caption2.bold())
+                    .foregroundStyle(.white)
+                    .padding(4)
+                    .background(Color.red, in: Circle())
+                    .offset(x: 4, y: -4)
+            }
         }
     }
 
