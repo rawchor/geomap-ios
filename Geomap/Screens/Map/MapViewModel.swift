@@ -5,6 +5,7 @@ final class MapViewModel: ObservableObject {
     @Published private(set) var friends: [NearbyFriendResponse] = []
     @Published private(set) var hasLoadedOnce = false
     @Published var selectedFriend: NearbyFriendResponse?
+    @Published private(set) var myStatus: StatusResponse?
 
     private let apiClient: APIClient
     private var pollingTask: Task<Void, Never>?
@@ -33,6 +34,15 @@ final class MapViewModel: ObservableObject {
     func stopPolling() {
         pollingTask?.cancel()
         pollingTask = nil
+    }
+
+    /// Refreshes the status bubble shown on the user's own map marker.
+    /// Called on appear and after the status-editing sheet dismisses — not
+    /// folded into the 15s poll loop, since only this app instance can
+    /// change it (no need to watch for external updates as often as
+    /// friends' positions).
+    func refreshMyStatus() async {
+        myStatus = try? await apiClient.myStatus()
     }
 
     /// A single fetch-friends-then-post-location cycle, exposed separately

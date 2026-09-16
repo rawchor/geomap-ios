@@ -63,6 +63,18 @@ final class APIClient {
         try await send(path: "/friends/nearby", method: "GET", body: EmptyBody?.none, requiresAuth: true)
     }
 
+    func statusPresets() async throws -> [StatusPresetOptionResponse] {
+        try await send(path: "/status/presets", method: "GET", body: EmptyBody?.none, requiresAuth: true)
+    }
+
+    func myStatus() async throws -> StatusResponse {
+        try await send(path: "/status/me", method: "GET", body: EmptyBody?.none, requiresAuth: true, allowsEmptyBody: true)
+    }
+
+    func updateStatus(_ request: StatusUpdateRequest) async throws -> StatusResponse {
+        try await send(path: "/status", method: "POST", body: request, requiresAuth: true, allowsEmptyBody: true)
+    }
+
     // MARK: - Core request/response handling
 
     private struct EmptyBody: Encodable {}
@@ -71,7 +83,8 @@ final class APIClient {
         path: String,
         method: String,
         body: Body?,
-        requiresAuth: Bool
+        requiresAuth: Bool,
+        allowsEmptyBody: Bool = false
     ) async throws -> Response {
         var request = URLRequest(url: baseURL.appendingPathComponent(path))
         request.httpMethod = method
@@ -104,7 +117,15 @@ final class APIClient {
         switch httpResponse.statusCode {
         case 200..<300:
             do {
-                return try decoder.decode(Response.self, from: data)
+                // Verified live: GET /status/me and POST /status return a
+                // genuinely empty 200 body (Content-Length: 0), not `{}`,
+                // when no status is set — undocumented in the OpenAPI
+                // schema. StatusResponse's fields are all optional, so
+                // decoding from an empty object yields the correct
+                // all-nil result; decoding empty Data directly would
+                // throw before even reaching that point.
+                let dataToDecode = (allowsEmptyBody && data.isEmpty) ? Data("{}".utf8) : data
+                return try decoder.decode(Response.self, from: dataToDecode)
             } catch {
                 throw APIError.decoding(error)
             }

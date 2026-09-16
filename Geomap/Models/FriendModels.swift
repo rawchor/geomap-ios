@@ -5,17 +5,16 @@ enum FriendDegree: String, Decodable {
     case secondDegree = "SECOND_DEGREE"
 }
 
-enum StatusPreset: String, Decodable {
-    case freeToHang = "FREE_TO_HANG"
-    case grabbingCoffee = "GRABBING_COFFEE"
-    case busy = "BUSY"
-    case outAndAbout = "OUT_AND_ABOUT"
-}
-
 /// Nullable as a whole on `NearbyFriendResponse` — the backend's "empty
 /// status is valid" design means a friend simply has no status set.
-struct FriendStatus: Decodable {
-    let preset: StatusPreset?
+///
+/// Presets are DB-backed now (fetched via `GET /status/presets`), not a
+/// fixed enum — this flattens the chosen preset's label/emoji directly
+/// onto the response rather than requiring a second lookup by id.
+struct StatusResponse: Decodable {
+    let presetOptionId: UUID?
+    let presetLabel: String?
+    let presetEmoji: String?
     let customText: String?
 }
 
@@ -28,7 +27,7 @@ struct NearbyFriendResponse: Decodable, Identifiable {
     let degree: FriendDegree
     /// Only present for second-degree friends ("Friends with {mutualFriendName}").
     let mutualFriendName: String?
-    let status: FriendStatus?
+    let status: StatusResponse?
     /// A FREE-tier user's confirmed friend outside the 20km radius: included
     /// as an upsell teaser with real position/photo but `status` always nil
     /// (withheld server-side, not just a client convention). PREMIUM
