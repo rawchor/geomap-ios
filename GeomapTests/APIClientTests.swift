@@ -54,7 +54,7 @@ final class APIClientTests: XCTestCase {
 
     func testRegisterWithValidationErrorSurfacesFieldMessages() async {
         MockURLProtocol.requestHandler = { request in
-            let body = #"{"errors":{"email":"must be a valid email"}}"#.data(using: .utf8)!
+            let body = #"{"timestamp":"2026-01-01T00:00:00Z","status":400,"message":"Validation failed","fieldErrors":{"email":"must be a valid email"}}"#.data(using: .utf8)!
             let response = HTTPURLResponse(url: request.url!, statusCode: 400, httpVersion: nil, headerFields: nil)!
             return (response, body)
         }
@@ -84,6 +84,31 @@ final class APIClientTests: XCTestCase {
         let client = makeClient(token: "test-token")
         let friends = try await client.nearbyFriends()
         XCTAssertTrue(friends.isEmpty)
+    }
+
+    func testExpiredTokenOnProtectedEndpointReturns401WithParsedMessage() async {
+        // Regression coverage for ERROR_SHAPES.md's documented fix: this
+        // used to come back as a bare 403 with an empty body — the server
+        // now sends 401 with the same envelope as every other error case.
+        MockURLProtocol.requestHandler = { request in
+            let body = """
+            {"timestamp":"2026-09-16T10:23:14.051391Z","status":401,"message":"Authentication required","fieldErrors":null}
+            """.data(using: .utf8)!
+            return (HTTPURLResponse(url: request.url!, statusCode: 401, httpVersion: nil, headerFields: nil)!, body)
+        }
+
+        let client = makeClient(token: "expired-token")
+        do {
+            _ = try await client.nearbyFriends()
+            XCTFail("Expected APIError.unauthorized")
+        } catch let error as APIError {
+            guard case .unauthorized(let message) = error else {
+                return XCTFail("Expected .unauthorized, got \(error)")
+            }
+            XCTAssertEqual(message, "Authentication required")
+        } catch {
+            XCTFail("Expected APIError, got \(error)")
+        }
     }
 
     func testAuthenticatedEndpointWithoutStoredTokenThrowsUnauthorized() async {

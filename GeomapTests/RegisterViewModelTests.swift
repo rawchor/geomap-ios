@@ -54,7 +54,7 @@ final class RegisterViewModelTests: XCTestCase {
 
     func testSubmitFailureSurfacesValidationMessage() async {
         let store = makeSessionStore { request in
-            let body = #"{"errors":{"email":"already registered"}}"#.data(using: .utf8)!
+            let body = #"{"timestamp":"2026-01-01T00:00:00Z","status":400,"message":"Validation failed","fieldErrors":{"email":"already registered"}}"#.data(using: .utf8)!
             return (HTTPURLResponse(url: request.url!, statusCode: 400, httpVersion: nil, headerFields: nil)!, body)
         }
         let viewModel = RegisterViewModel()

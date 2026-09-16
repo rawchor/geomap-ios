@@ -11,6 +11,36 @@
         }
     ],
     "paths": {
+        "/status": {
+            "post": {
+                "tags": [
+                    "status-controller"
+                ],
+                "operationId": "update",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StatusUpdateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/location": {
             "post": {
                 "tags": [
@@ -101,6 +131,49 @@
                 }
             }
         },
+        "/status/presets": {
+            "get": {
+                "tags": [
+                    "status-controller"
+                ],
+                "operationId": "presets",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StatusPresetOptionResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/status/me": {
+            "get": {
+                "tags": [
+                    "status-controller"
+                ],
+                "operationId": "me",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/friends/nearby": {
             "get": {
                 "tags": [
@@ -124,12 +197,87 @@
                 }
             }
         },
+        "/chat/{friendId}/messages": {
+            "get": {
+                "tags": [
+                    "chat-controller"
+                ],
+                "operationId": "messages",
+                "parameters": [
+                    {
+                        "name": "friendId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "before",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ChatMessageResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/conversations": {
+            "get": {
+                "tags": [
+                    "chat-controller"
+                ],
+                "operationId": "conversations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ConversationResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/me": {
             "get": {
                 "tags": [
                     "auth-controller"
                 ],
-                "operationId": "me",
+                "operationId": "me_1",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -147,6 +295,43 @@
     },
     "components": {
         "schemas": {
+            "StatusUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "presetOptionId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "customText": {
+                        "type": "string",
+                        "maxLength": 30,
+                        "minLength": 0
+                    },
+                    "durationMinutes": {
+                        "type": "integer",
+                        "format": "int32",
+                        "exclusiveMinimum": 0
+                    }
+                }
+            },
+            "StatusResponse": {
+                "type": "object",
+                "properties": {
+                    "presetOptionId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "presetLabel": {
+                        "type": "string"
+                    },
+                    "presetEmoji": {
+                        "type": "string"
+                    },
+                    "customText": {
+                        "type": "string"
+                    }
+                }
+            },
             "LocationUpdateRequest": {
                 "type": "object",
                 "properties": {
@@ -257,6 +442,21 @@
                     "password"
                 ]
             },
+            "StatusPresetOptionResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "emoji": {
+                        "type": "string"
+                    }
+                }
+            },
             "NearbyFriendResponse": {
                 "type": "object",
                 "properties": {
@@ -296,20 +496,53 @@
                     }
                 }
             },
-            "StatusResponse": {
+            "ChatMessageResponse": {
                 "type": "object",
                 "properties": {
-                    "preset": {
+                    "id": {
                         "type": "string",
-                        "enum": [
-                            "FREE_TO_HANG",
-                            "GRABBING_COFFEE",
-                            "BUSY",
-                            "OUT_AND_ABOUT"
-                        ]
+                        "format": "uuid"
                     },
-                    "customText": {
+                    "senderId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "recipientId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "content": {
                         "type": "string"
+                    },
+                    "sentAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "readAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ConversationResponse": {
+                "type": "object",
+                "properties": {
+                    "friendId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "displayName": {
+                        "type": "string"
+                    },
+                    "profilePhotoUrl": {
+                        "type": "string"
+                    },
+                    "lastMessage": {
+                        "type": "string"
+                    },
+                    "lastMessageSentAt": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             }
