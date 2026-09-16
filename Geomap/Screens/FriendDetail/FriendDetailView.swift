@@ -3,29 +3,50 @@ import SwiftUI
 struct FriendDetailView: View {
     let friend: NearbyFriendResponse
 
+    @EnvironmentObject private var sessionStore: SessionStore
+
     var body: some View {
-        VStack(spacing: 16) {
-            AvatarView(
-                photoURL: friend.profilePhotoUrl,
-                displayName: friend.displayName,
-                ringColor: friend.degree.ringColor,
-                diameter: 96
-            )
+        NavigationStack {
+            VStack(spacing: 16) {
+                AvatarView(
+                    photoURL: friend.profilePhotoUrl,
+                    displayName: friend.displayName,
+                    ringColor: friend.degree.ringColor,
+                    diameter: 96
+                )
 
-            Text(friend.displayName)
-                .font(.title2.bold())
+                Text(friend.displayName)
+                    .font(.title2.bold())
 
-            Text(connectionContext)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                Text(connectionContext)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
 
-            statusBubble
-                .padding(.top, 4)
+                statusBubble
+                    .padding(.top, 4)
 
-            Spacer()
+                if let currentUserId {
+                    NavigationLink {
+                        ChatView(friendId: friend.userId, friendDisplayName: friend.displayName, currentUserId: currentUserId)
+                    } label: {
+                        Label("Message", systemImage: "message.fill")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.top, 8)
+                }
+
+                Spacer()
+            }
+            .padding(24)
         }
-        .padding(24)
         .presentationDetents([.medium])
+    }
+
+    private var currentUserId: UUID? {
+        if case .loggedIn(let user) = sessionStore.authState {
+            return user.id
+        }
+        return nil
     }
 
     private var connectionContext: String {

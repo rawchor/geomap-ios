@@ -75,6 +75,27 @@ final class APIClient {
         try await send(path: "/status", method: "POST", body: request, requiresAuth: true, allowsEmptyBody: true)
     }
 
+    func conversations() async throws -> [ConversationResponse] {
+        try await send(path: "/chat/conversations", method: "GET", body: EmptyBody?.none, requiresAuth: true)
+    }
+
+    func chatMessages(friendId: UUID, before: Date? = nil, limit: Int? = nil) async throws -> [ChatMessageResponse] {
+        var queryItems: [URLQueryItem] = []
+        if let before {
+            queryItems.append(URLQueryItem(name: "before", value: ISO8601DateFormatter().string(from: before)))
+        }
+        if let limit {
+            queryItems.append(URLQueryItem(name: "limit", value: String(limit)))
+        }
+        return try await send(
+            path: "/chat/\(friendId)/messages",
+            method: "GET",
+            body: EmptyBody?.none,
+            requiresAuth: true,
+            queryItems: queryItems
+        )
+    }
+
     // MARK: - Core request/response handling
 
     private struct EmptyBody: Encodable {}
@@ -84,9 +105,16 @@ final class APIClient {
         method: String,
         body: Body?,
         requiresAuth: Bool,
-        allowsEmptyBody: Bool = false
+        allowsEmptyBody: Bool = false,
+        queryItems: [URLQueryItem] = []
     ) async throws -> Response {
-        var request = URLRequest(url: baseURL.appendingPathComponent(path))
+        var url = baseURL.appendingPathComponent(path)
+        if !queryItems.isEmpty {
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+            components.queryItems = queryItems
+            url = components.url!
+        }
+        var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 

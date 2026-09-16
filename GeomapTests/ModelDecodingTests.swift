@@ -168,4 +168,42 @@ final class ModelDecodingTests: XCTestCase {
         let response = try decoder.decode(LocationResponse.self, from: json)
         XCTAssertEqual(response.latitude, 1.0)
     }
+
+    func testChatMessageResponseDecodesContractShape() throws {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let json = """
+        {
+            "id": "d39ad7d6-d739-4874-b716-ad81ded6a1f5",
+            "senderId": "11111111-1111-1111-1111-111111111111",
+            "recipientId": "22222222-2222-2222-2222-222222222222",
+            "content": "hey",
+            "sentAt": "2026-09-16T13:03:02Z",
+            "readAt": null
+        }
+        """.data(using: .utf8)!
+
+        let message = try decoder.decode(ChatMessageResponse.self, from: json)
+
+        XCTAssertEqual(message.content, "hey")
+        XCTAssertNil(message.readAt)
+    }
+
+    func testConversationResponseDecodesWithNilLastMessage() throws {
+        let json = """
+        {
+            "friendId": "d39ad7d6-d739-4874-b716-ad81ded6a1f5",
+            "displayName": "Anna",
+            "profilePhotoUrl": null,
+            "lastMessage": null,
+            "lastMessageSentAt": null
+        }
+        """.data(using: .utf8)!
+
+        let conversation = try JSONDecoder().decode(ConversationResponse.self, from: json)
+
+        XCTAssertEqual(conversation.displayName, "Anna")
+        XCTAssertNil(conversation.lastMessage)
+        XCTAssertEqual(conversation.id, conversation.friendId)
+    }
 }

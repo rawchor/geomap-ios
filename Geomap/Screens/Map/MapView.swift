@@ -15,6 +15,7 @@ struct MapView: View {
     @State private var currentRegion: MKCoordinateRegion?
     @State private var hasCenteredOnUser = false
     @State private var isShowingMyStatus = false
+    @State private var isShowingConversations = false
 
     var body: some View {
         ZStack {
@@ -80,8 +81,11 @@ struct MapView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            logoutButton
-                .padding(16)
+            VStack(spacing: 12) {
+                logoutButton
+                messagesButton
+            }
+            .padding(16)
         }
         .overlay(alignment: .bottomTrailing) {
             zoomControls
@@ -121,6 +125,9 @@ struct MapView: View {
             Task { await viewModel.refreshMyStatus() }
         }) {
             MyStatusView()
+        }
+        .sheet(isPresented: $isShowingConversations) {
+            ConversationsListView(currentUserId: currentUser.id)
         }
     }
 
@@ -226,6 +233,17 @@ struct MapView: View {
             sessionStore.logout()
         } label: {
             Image(systemName: "rectangle.portrait.and.arrow.right")
+                .font(.headline)
+                .padding(10)
+                .background(.regularMaterial, in: Circle())
+        }
+    }
+
+    private var messagesButton: some View {
+        Button {
+            isShowingConversations = true
+        } label: {
+            Image(systemName: "message.fill")
                 .font(.headline)
                 .padding(10)
                 .background(.regularMaterial, in: Circle())
