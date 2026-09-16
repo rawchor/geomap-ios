@@ -1,26 +1,27 @@
 import SwiftUI
 
-private enum LoginField: Hashable {
-    case email, password
+private enum RegisterField: Hashable {
+    case displayName, email, password
 }
 
-struct LoginView: View {
+struct RegisterView: View {
     @EnvironmentObject private var sessionStore: SessionStore
-    @StateObject private var viewModel = LoginViewModel()
-    @FocusState private var focusedField: LoginField?
+    @StateObject private var viewModel = RegisterViewModel()
+    @FocusState private var focusedField: RegisterField?
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            content
-        }
-    }
-
-    private var content: some View {
         VStack(spacing: 20) {
-            Text("Geomap")
+            Text("Create Account")
                 .font(.largeTitle.bold())
 
             VStack(spacing: 16) {
+                TextField("Display Name", text: $viewModel.displayName)
+                    .textContentType(.name)
+                    .textFieldRowStyle()
+                    .focused($focusedField, equals: .displayName)
+                    .onTapGesture { focusedField = .displayName }
+
                 TextField("Email", text: $viewModel.email)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
@@ -28,16 +29,10 @@ struct LoginView: View {
                     .autocorrectionDisabled()
                     .textFieldRowStyle()
                     .focused($focusedField, equals: .email)
-                    // Redundant with the field's native tap-to-focus, but
-                    // that path has been unreliable under automated touch
-                    // injection (Simulator UI-testing tools); this backs
-                    // it with a plain tap gesture driving @FocusState
-                    // explicitly, using the same simple mechanism that's
-                    // proven reliable for buttons elsewhere in the app.
                     .onTapGesture { focusedField = .email }
 
-                SecureField("Password", text: $viewModel.password)
-                    .textContentType(.password)
+                SecureField("Password (min. 8 characters)", text: $viewModel.password)
+                    .textContentType(.newPassword)
                     .textFieldRowStyle()
                     .focused($focusedField, equals: .password)
                     .onTapGesture { focusedField = .password }
@@ -57,15 +52,15 @@ struct LoginView: View {
                     ProgressView()
                         .frame(maxWidth: .infinity)
                 } else {
-                    Text("Log In")
+                    Text("Register")
                         .frame(maxWidth: .infinity)
                 }
             }
             .buttonStyle(.borderedProminent)
             .disabled(!viewModel.canSubmit)
 
-            NavigationLink("Don't have an account? Register") {
-                RegisterView()
+            Button("Already have an account? Log In") {
+                dismiss()
             }
             .font(.footnote)
         }
