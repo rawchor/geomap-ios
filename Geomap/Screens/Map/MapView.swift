@@ -32,15 +32,11 @@ struct MapView: View {
 
                     Annotation(currentUser.displayName, coordinate: userCoordinate) {
                         VStack(spacing: 4) {
-                            AvatarView(photoURL: nil, displayName: currentUser.displayName, ringColor: .green, diameter: 44)
                             if let statusText = viewModel.myStatus?.displayText {
-                                Text(statusText)
-                                    .font(.caption2)
-                                    .lineLimit(1)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 3)
-                                    .background(Color.blue.opacity(0.15), in: Capsule())
+                                statusBubble(statusText)
+                                    .offset(y: statusBubbleOffsetY(for: currentUser.id, coordinate: userCoordinate))
                             }
+                            AvatarView(photoURL: nil, displayName: currentUser.displayName, ringColor: .green, diameter: 44)
                         }
                         .onTapGesture { isShowingMyStatus = true }
                     }
@@ -55,18 +51,27 @@ struct MapView: View {
                     // printing their name right under it would give away
                     // the exact identity opacity is meant to obscure.
                     Annotation(friend.locked ? "" : friend.displayName, coordinate: friend.coordinate) {
-                        AvatarView(
-                            photoURL: friend.profilePhotoUrl,
-                            displayName: friend.displayName,
-                            ringColor: friend.degree.ringColor,
-                            diameter: 40
-                        )
-                        .opacity(friend.locked ? 0.35 : 1.0)
+                        VStack(spacing: 4) {
+                            // Locked previews' status is always null
+                            // server-side, so this naturally never shows
+                            // for them — no separate guard needed.
+                            if let statusText = friend.status?.displayText {
+                                statusBubble(statusText)
+                                    .offset(y: statusBubbleOffsetY(for: friend.userId, coordinate: friend.coordinate))
+                            }
+                            AvatarView(
+                                photoURL: friend.profilePhotoUrl,
+                                displayName: friend.displayName,
+                                ringColor: friend.degree.ringColor,
+                                diameter: 40
+                            )
+                            .opacity(friend.locked ? 0.35 : 1.0)
+                        }
                         .onTapGesture {
-                            // Locked previews have no status to show and
-                            // aren't a real friend interaction yet — a
-                            // real friend of a FREE-tier user just outside
-                            // their radius, shown as an upsell teaser.
+                            // Locked previews aren't a real friend
+                            // interaction yet — a real friend of a
+                            // FREE-tier user just outside their radius,
+                            // shown as an upsell teaser.
                             guard !friend.locked else { return }
                             viewModel.selectedFriend = friend
                         }
@@ -203,6 +208,50 @@ struct MapView: View {
             )
             return CLLocationCoordinate2D(latitude: lat * 180 / .pi, longitude: lon * 180 / .pi)
         }
+    }
+
+    private func statusBubble(_ text: String) -> some View {
+        Text(text)
+            .font(.caption2)
+            .lineLimit(1)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 3)
+            .background(Color.blue.opacity(0.15), in: Capsule())
+    }
+
+    /// (id, coordinate) for everyone currently rendered on the map — self
+    /// plus friends — used only to figure out who else is nearby a given
+    /// person, for status-bubble staggering below.
+    private var mapPeopleCoordinates: [(id: UUID, coordinate: CLLocationCoordinate2D)] {
+        var people = viewModel.friends.map { (id: $0.userId, coordinate: $0.coordinate) }
+        if let userCoordinate = locationService.currentLocation?.coordinate {
+            people.append((id: currentUser.id, coordinate: userCoordinate))
+        }
+        return people
+    }
+
+    /// Status bubbles sit directly above each avatar by default. When two
+    /// or more people are close enough together that their bubbles would
+    /// otherwise collide, this pushes each additional cluster member's
+    /// bubble progressively higher, so they stack in a rising staircase
+    /// instead of overlapping illegibly.
+    ///
+    /// The "close together" check is a fixed lat/lon threshold, not a true
+    /// screen-space collision test — the higher-level SwiftUI Map API
+    /// doesn't expose per-coordinate pixel positions, so this can't
+    /// account for zoom level. Tuned against the seeded test data's
+    /// ~2-5km friend spacing; a real deployment with tighter or looser
+    /// clustering may need this threshold adjusted.
+    private func statusBubbleOffsetY(for id: UUID, coordinate: CLLocationCoordinate2D) -> CGFloat {
+        let clusterThresholdDegrees = 0.045
+        let cluster = mapPeopleCoordinates
+            .filter {
+                abs($0.coordinate.latitude - coordinate.latitude) < clusterThresholdDegrees
+                    && abs($0.coordinate.longitude - coordinate.longitude) < clusterThresholdDegrees
+            }
+            .sorted { $0.id.uuidString < $1.id.uuidString }
+        let stagger = cluster.firstIndex(where: { $0.id == id }) ?? 0
+        return -CGFloat(stagger) * 22
     }
 
     private func zoom(by factor: Double) {
