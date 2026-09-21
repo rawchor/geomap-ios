@@ -17,6 +17,8 @@ struct MapView: View {
     @State private var hasCenteredOnUser = false
     @State private var isShowingMyStatus = false
     @State private var isShowingConversations = false
+    @State private var selectedCluster: MapCluster?
+    @State private var pendingClusterSelection: MapPerson?
 
     init(currentUser: User) {
         self.currentUser = currentUser
@@ -29,52 +31,37 @@ struct MapView: View {
                 if let userCoordinate = locationService.currentLocation?.coordinate {
                     MapPolygon(coordinates: radiusMaskCoordinates(center: userCoordinate))
                         .foregroundStyle(Color.black.opacity(0.35))
-
-                    Annotation(currentUser.displayName, coordinate: userCoordinate) {
-                        VStack(spacing: 4) {
-                            if let statusText = viewModel.myStatus?.displayText {
-                                statusBubble(statusText)
-                                    .offset(y: statusBubbleOffsetY(for: currentUser.id, coordinate: userCoordinate))
-                            }
-                            AvatarView(photoURL: nil, displayName: currentUser.displayName, ringColor: .green, diameter: 44)
-                        }
-                        .onTapGesture { isShowingMyStatus = true }
-                    }
                     MapCircle(center: userCoordinate, radius: radiusMeters)
                         .foregroundStyle(.clear)
                         .stroke(.blue.opacity(0.6), lineWidth: 2)
                 }
 
-                ForEach(viewModel.friends) { friend in
-                    // A locked preview shouldn't reveal who it is via the
-                    // name label — the faded avatar alone is the teaser;
-                    // printing their name right under it would give away
-                    // the exact identity opacity is meant to obscure.
-                    Annotation(friend.locked ? "" : friend.displayName, coordinate: friend.coordinate) {
-                        VStack(spacing: 4) {
-                            // Locked previews' status is always null
-                            // server-side, so this naturally never shows
-                            // for them — no separate guard needed.
-                            if let statusText = friend.status?.displayText {
-                                statusBubble(statusText)
-                                    .offset(y: statusBubbleOffsetY(for: friend.userId, coordinate: friend.coordinate))
-                            }
-                            AvatarView(
-                                photoURL: friend.profilePhotoUrl,
-                                displayName: friend.displayName,
-                                ringColor: friend.degree.ringColor,
-                                diameter: 40
-                            )
-                            .opacity(friend.locked ? 0.35 : 1.0)
+                // Locked previews are excluded from clustering — they're
+                // always rendered individually (faded, unlabeled, non-
+                // interactive), a distinct case from the regular
+                // overlapping-status problem clustering solves.
+                ForEach(mapClusters) { cluster in
+                    if let person = cluster.members.first, cluster.members.count == 1 {
+                        Annotation(person.displayName, coordinate: person.coordinate) {
+                            singlePersonMarker(person)
                         }
-                        .onTapGesture {
-                            // Locked previews aren't a real friend
-                            // interaction yet — a real friend of a
-                            // FREE-tier user just outside their radius,
-                            // shown as an upsell teaser.
-                            guard !friend.locked else { return }
-                            viewModel.selectedFriend = friend
+                    } else {
+                        Annotation("", coordinate: cluster.coordinate) {
+                            clusterMarker(cluster)
+                                .onTapGesture { selectedCluster = cluster }
                         }
+                    }
+                }
+
+                ForEach(viewModel.friends.filter(\.locked)) { friend in
+                    Annotation("", coordinate: friend.coordinate) {
+                        AvatarView(
+                            photoURL: friend.profilePhotoUrl,
+                            displayName: friend.displayName,
+                            ringColor: friend.degree.ringColor,
+                            diameter: 40
+                        )
+                        .opacity(0.35)
                     }
                 }
             }
@@ -148,6 +135,25 @@ struct MapView: View {
             ConversationsListView(currentUserId: currentUser.id)
                 .environmentObject(unreadStore)
         }
+        .sheet(item: $selectedCluster) { cluster in
+            ClusterMembersView(members: cluster.members) { person in
+                // Deferred via pendingClusterSelection/onChange below
+                // rather than presenting the next sheet directly here:
+                // presenting a new sheet in the same tick a different one
+                // is being dismissed is unreliable in SwiftUI.
+                pendingClusterSelection = person
+                selectedCluster = nil
+            }
+        }
+        .onChange(of: selectedCluster == nil) { _, isDismissed in
+            guard isDismissed, let person = pendingClusterSelection else { return }
+            pendingClusterSelection = nil
+            if person.isSelf {
+                isShowingMyStatus = true
+            } else if let friend = person.friend {
+                viewModel.selectedFriend = friend
+            }
+        }
     }
 
     /// A single non-self-intersecting polygon path covering the area around
@@ -210,6 +216,39 @@ struct MapView: View {
         }
     }
 
+    /// Unclustered people, freshly recomputed on every relevant change
+    /// (friends poll, own status refresh, camera move) so clustering stays
+    /// live as the map is panned/zoomed. Locked previews are excluded —
+    /// rendered separately, unclustered, in the Map content above.
+    private var mapClusters: [MapCluster] {
+        var people: [MapPerson] = []
+        if let userCoordinate = locationService.currentLocation?.coordinate {
+            people.append(MapPerson(
+                id: currentUser.id,
+                displayName: currentUser.displayName,
+                photoURL: nil,
+                coordinate: userCoordinate,
+                statusText: viewModel.myStatus?.displayText,
+                ringColor: .green,
+                isSelf: true,
+                friend: nil
+            ))
+        }
+        for friend in viewModel.friends where !friend.locked {
+            people.append(MapPerson(
+                id: friend.userId,
+                displayName: friend.displayName,
+                photoURL: friend.profilePhotoUrl,
+                coordinate: friend.coordinate,
+                statusText: friend.status?.displayText,
+                ringColor: friend.degree.ringColor,
+                isSelf: false,
+                friend: friend
+            ))
+        }
+        return buildMapClusters(from: people, visibleSpan: currentRegion?.span)
+    }
+
     private func statusBubble(_ text: String) -> some View {
         Text(text)
             .font(.caption2)
@@ -219,39 +258,49 @@ struct MapView: View {
             .background(Color.blue.opacity(0.15), in: Capsule())
     }
 
-    /// (id, coordinate) for everyone currently rendered on the map — self
-    /// plus friends — used only to figure out who else is nearby a given
-    /// person, for status-bubble staggering below.
-    private var mapPeopleCoordinates: [(id: UUID, coordinate: CLLocationCoordinate2D)] {
-        var people = viewModel.friends.map { (id: $0.userId, coordinate: $0.coordinate) }
-        if let userCoordinate = locationService.currentLocation?.coordinate {
-            people.append((id: currentUser.id, coordinate: userCoordinate))
+    private func singlePersonMarker(_ person: MapPerson) -> some View {
+        VStack(spacing: 4) {
+            if let statusText = person.statusText {
+                statusBubble(statusText)
+            }
+            AvatarView(
+                photoURL: person.photoURL,
+                displayName: person.displayName,
+                ringColor: person.ringColor,
+                diameter: person.isSelf ? 44 : 40
+            )
         }
-        return people
+        .onTapGesture {
+            if person.isSelf {
+                isShowingMyStatus = true
+            } else if let friend = person.friend {
+                viewModel.selectedFriend = friend
+            }
+        }
     }
 
-    /// Status bubbles sit directly above each avatar by default. When two
-    /// or more people are close enough together that their bubbles would
-    /// otherwise collide, this pushes each additional cluster member's
-    /// bubble progressively higher, so they stack in a rising staircase
-    /// instead of overlapping illegibly.
-    ///
-    /// The "close together" check is a fixed lat/lon threshold, not a true
-    /// screen-space collision test — the higher-level SwiftUI Map API
-    /// doesn't expose per-coordinate pixel positions, so this can't
-    /// account for zoom level. Tuned against the seeded test data's
-    /// ~2-5km friend spacing; a real deployment with tighter or looser
-    /// clustering may need this threshold adjusted.
-    private func statusBubbleOffsetY(for id: UUID, coordinate: CLLocationCoordinate2D) -> CGFloat {
-        let clusterThresholdDegrees = 0.045
-        let cluster = mapPeopleCoordinates
-            .filter {
-                abs($0.coordinate.latitude - coordinate.latitude) < clusterThresholdDegrees
-                    && abs($0.coordinate.longitude - coordinate.longitude) < clusterThresholdDegrees
+    /// Overlapping mini avatars standing in for everyone in the cluster —
+    /// tapping it "uncovers" them via ClusterMembersView instead of
+    /// showing every status bubble stacked illegibly on top of each other.
+    private func clusterMarker(_ cluster: MapCluster) -> some View {
+        HStack(spacing: -10) {
+            ForEach(Array(cluster.members.prefix(4))) { person in
+                AvatarView(photoURL: person.photoURL, displayName: person.displayName, ringColor: person.ringColor, diameter: 30)
+                    .overlay(Circle().stroke(Color(.systemBackground), lineWidth: 2))
             }
-            .sorted { $0.id.uuidString < $1.id.uuidString }
-        let stagger = cluster.firstIndex(where: { $0.id == id }) ?? 0
-        return -CGFloat(stagger) * 22
+        }
+        .padding(4)
+        .background(.regularMaterial, in: Capsule())
+        .overlay(alignment: .topTrailing) {
+            if cluster.members.count > 4 {
+                Text("+\(cluster.members.count - 4)")
+                    .font(.caption2.bold())
+                    .foregroundStyle(.white)
+                    .padding(4)
+                    .background(Color.gray, in: Circle())
+                    .offset(x: 6, y: -6)
+            }
+        }
     }
 
     private func zoom(by factor: Double) {
