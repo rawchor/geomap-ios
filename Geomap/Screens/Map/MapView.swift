@@ -17,6 +17,7 @@ struct MapView: View {
     @State private var hasCenteredOnUser = false
     @State private var isShowingMyStatus = false
     @State private var isShowingConversations = false
+    @AppStorage("map.useSatellite") private var useSatellite = false
     @State private var selectedCluster: MapCluster?
     @State private var pendingClusterSelection: MapPerson?
 
@@ -65,7 +66,7 @@ struct MapView: View {
                     }
                 }
             }
-            .mapStyle(.hybrid)
+            .mapStyle(useSatellite ? .hybrid : .standard)
             .ignoresSafeArea(edges: .bottom)
             .onMapCameraChange(frequency: .onEnd) { context in
                 currentRegion = context.region
@@ -83,6 +84,7 @@ struct MapView: View {
             VStack(spacing: 12) {
                 logoutButton
                 messagesButton
+                mapStyleButton
             }
             .padding(16)
         }
@@ -351,6 +353,18 @@ struct MapView: View {
                 .padding(10)
                 .background(.regularMaterial, in: Circle())
         }
+    }
+
+    private var mapStyleButton: some View {
+        Button {
+            useSatellite.toggle()
+        } label: {
+            Image(systemName: useSatellite ? "map" : "globe.europe.africa.fill")
+                .font(.headline)
+                .padding(10)
+                .background(.regularMaterial, in: Circle())
+        }
+        .accessibilityLabel(useSatellite ? "Switch to standard map" : "Switch to satellite map")
     }
 
     private var messagesButton: some View {
