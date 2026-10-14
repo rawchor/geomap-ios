@@ -66,7 +66,7 @@ struct MapView: View {
                     }
                 }
             }
-            .mapStyle(useSatellite ? .hybrid : .standard)
+            .mapStyle(useSatellite ? .hybrid : .standard(emphasis: .muted))
             .ignoresSafeArea(edges: .bottom)
             .onMapCameraChange(frequency: .onEnd) { context in
                 currentRegion = context.region
