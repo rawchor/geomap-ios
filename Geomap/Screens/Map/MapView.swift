@@ -65,6 +65,7 @@ struct MapView: View {
                     }
                 }
             }
+            .mapStyle(.hybrid)
             .ignoresSafeArea(edges: .bottom)
             .onMapCameraChange(frequency: .onEnd) { context in
                 currentRegion = context.region
@@ -255,7 +256,8 @@ struct MapView: View {
             .lineLimit(1)
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
-            .background(Color.blue.opacity(0.15), in: Capsule())
+            .background(.regularMaterial, in: Capsule())
+            .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
     }
 
     private func singlePersonMarker(_ person: MapPerson) -> some View {
@@ -267,7 +269,7 @@ struct MapView: View {
                 photoURL: person.photoURL,
                 displayName: person.displayName,
                 ringColor: person.ringColor,
-                diameter: person.isSelf ? 44 : 40
+                diameter: person.isSelf ? 52 : 46
             )
         }
         .onTapGesture {
