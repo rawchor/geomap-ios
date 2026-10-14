@@ -86,7 +86,7 @@ struct MyStatusView: View {
                 .font(.subheadline)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
-                .background(Color.blue.opacity(0.15), in: Capsule())
+                .background(Palette.sage.opacity(0.5), in: Capsule())
         } else {
             Text("No status set")
                 .font(.subheadline)

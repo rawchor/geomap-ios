@@ -5,8 +5,8 @@ extension FriendDegree {
     /// once that's finalized.
     var ringColor: Color {
         switch self {
-        case .firstDegree: return .blue
-        case .secondDegree: return .orange
+        case .firstDegree: return Palette.blueGrey
+        case .secondDegree: return Palette.rose
         }
     }
 }

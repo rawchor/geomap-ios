@@ -39,6 +39,7 @@
 		90A9E5D9F1A7E45C12EF430A /* ChatViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1D2862B53922E681BF6C66 /* ChatViewModelTests.swift */; };
 		926E846B702BE0FA6AD41ADA /* ConversationsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6704CBF4770B7A7B03FC3044 /* ConversationsListViewModel.swift */; };
 		9EA17F0D401BE5AC6F0EA40B /* MapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9585AFAF0F17A28B03A67CB /* MapViewModelTests.swift */; };
+		A8C820614C29AB6A8B90AF98 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BC794E017862BAC093C3C3 /* Palette.swift */; };
 		B19C7D148254C6024860463A /* ModelDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C624B1CECEEF4383265BA87F /* ModelDecodingTests.swift */; };
 		B3BE548716AB0ACCB7A4A5E3 /* ClusterMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D85FCABC3F2134DE1CBEFAD /* ClusterMembersView.swift */; };
 		B5166EBAEEA132D6839254E4 /* MyStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B302058EAFAEF16D2FBA6234 /* MyStatusViewModel.swift */; };
@@ -112,6 +113,7 @@
 		CB1A751202C875BA4A8F80D9 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		CD733DF268C69838310D763B /* MyStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusView.swift; sourceTree = "<group>"; };
 		CF5D2060D4F2FB23184D0EAB /* LocationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModels.swift; sourceTree = "<group>"; };
+		D0BC794E017862BAC093C3C3 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		D43BCC89CDBF574A1F70AC5B /* MyStatusViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusViewModelTests.swift; sourceTree = "<group>"; };
 		D84756F6C883A7A054F5CF6A /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		DFB501EEE3A7A69EC4537B0B /* LocalNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotifier.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				7F9D7D27DC2813AA894E816F /* AvatarView.swift */,
 				45BA23C4A6E582903128E607 /* FriendStyle.swift */,
+				D0BC794E017862BAC093C3C3 /* Palette.swift */,
 				A01588697632EF230A3A55DB /* TextFieldRowStyle.swift */,
 			);
 			path = Components;
@@ -440,6 +443,7 @@
 				1B698405D9E81ECAABDDEEDE /* MapViewModel.swift in Sources */,
 				063572B281438BFE04F9332F /* MyStatusView.swift in Sources */,
 				B5166EBAEEA132D6839254E4 /* MyStatusViewModel.swift in Sources */,
+				A8C820614C29AB6A8B90AF98 /* Palette.swift in Sources */,
 				F39B3ECBD997A5E9A730A8B8 /* RegisterView.swift in Sources */,
 				D161991CC27D06673235520D /* RegisterViewModel.swift in Sources */,
 				8E0B1487C52A4CECBD7B3CAD /* RootView.swift in Sources */,

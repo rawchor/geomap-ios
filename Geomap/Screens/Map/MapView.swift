@@ -30,10 +30,10 @@ struct MapView: View {
             Map(position: $cameraPosition) {
                 if let userCoordinate = locationService.currentLocation?.coordinate {
                     MapPolygon(coordinates: radiusMaskCoordinates(center: userCoordinate))
-                        .foregroundStyle(Color.black.opacity(0.35))
+                        .foregroundStyle(Palette.forest.opacity(0.3))
                     MapCircle(center: userCoordinate, radius: radiusMeters)
                         .foregroundStyle(.clear)
-                        .stroke(.blue.opacity(0.6), lineWidth: 2)
+                        .stroke(Palette.radiusBoundary, lineWidth: 3)
                 }
 
                 // Locked previews are excluded from clustering — they're
@@ -230,7 +230,7 @@ struct MapView: View {
                 photoURL: nil,
                 coordinate: userCoordinate,
                 statusText: viewModel.myStatus?.displayText,
-                ringColor: .green,
+                ringColor: Palette.forest,
                 isSelf: true,
                 friend: nil
             ))
@@ -299,7 +299,7 @@ struct MapView: View {
                     .font(.caption2.bold())
                     .foregroundStyle(.white)
                     .padding(4)
-                    .background(Color.gray, in: Circle())
+                    .background(Palette.olive, in: Circle())
                     .offset(x: 6, y: -6)
             }
         }
@@ -368,7 +368,7 @@ struct MapView: View {
                     .font(.caption2.bold())
                     .foregroundStyle(.white)
                     .padding(4)
-                    .background(Color.red, in: Circle())
+                    .background(Palette.terracotta, in: Circle())
                     .offset(x: 4, y: -4)
             }
         }

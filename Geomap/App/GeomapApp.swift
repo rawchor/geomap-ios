@@ -7,6 +7,7 @@ struct GeomapApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .tint(Palette.forest)
                 .environmentObject(sessionStore)
                 .task {
                     await sessionStore.bootstrap()
