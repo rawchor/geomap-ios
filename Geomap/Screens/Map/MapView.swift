@@ -232,7 +232,7 @@ struct MapView: View {
                 photoURL: nil,
                 coordinate: userCoordinate,
                 statusText: viewModel.myStatus?.displayText,
-                ringColor: Palette.forest,
+                ringColor: Palette.maroon,
                 isSelf: true,
                 friend: nil
             ))
@@ -301,7 +301,7 @@ struct MapView: View {
                     .font(.caption2.bold())
                     .foregroundStyle(.white)
                     .padding(4)
-                    .background(Palette.olive, in: Circle())
+                    .background(Palette.taupe, in: Circle())
                     .offset(x: 6, y: -6)
             }
         }
@@ -382,7 +382,7 @@ struct MapView: View {
                     .font(.caption2.bold())
                     .foregroundStyle(.white)
                     .padding(4)
-                    .background(Palette.terracotta, in: Circle())
+                    .background(Palette.rust, in: Circle())
                     .offset(x: 4, y: -4)
             }
         }

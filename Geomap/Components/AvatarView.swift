@@ -46,7 +46,7 @@ struct AvatarView: View {
 
     // Stable across launches (String.hashValue is randomized per process).
     private var fallbackColor: Color {
-        let palette: [Color] = [Palette.forest, Palette.olive, Palette.terracotta, Palette.blueGrey, Palette.rose, Palette.tan]
+        let palette: [Color] = [Palette.maroon, Palette.taupe, Palette.clay, Palette.rust]
         let seed = displayName.unicodeScalars.reduce(0) { $0 &+ Int($1.value) }
         return palette[seed % palette.count]
     }
