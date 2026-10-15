@@ -7,6 +7,13 @@ enum APIError: Error {
     case network(Error)
     case decoding(Error)
 
+    /// 410: an encounter code that is unknown or expired (the backend
+    /// deliberately doesn't distinguish the two).
+    var isGone: Bool {
+        if case .server(let status, _) = self { return status == 410 }
+        return false
+    }
+
     /// A message suitable for inline display (login/register forms, etc.).
     /// Surfaces the backend's own copy rather than inventing custom text.
     var displayMessage: String {

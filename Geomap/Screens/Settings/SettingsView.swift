@@ -8,6 +8,7 @@ struct SettingsView: View {
     @EnvironmentObject private var unreadStore: UnreadMessagesStore
     @Environment(\.dismiss) private var dismiss
     @State private var isShowingMyStatus = false
+    @State private var isShowingAddFriend = false
 
     var body: some View {
         NavigationStack {
@@ -30,6 +31,11 @@ struct SettingsView: View {
                 }
 
                 Section("Friends") {
+                    Button {
+                        isShowingAddFriend = true
+                    } label: {
+                        Label("Add friend", systemImage: "person.badge.plus")
+                    }
                     friendsContent
                 }
 
@@ -53,6 +59,11 @@ struct SettingsView: View {
             .refreshable { await viewModel.load() }
             .sheet(isPresented: $isShowingMyStatus) {
                 MyStatusView()
+            }
+            .sheet(isPresented: $isShowingAddFriend, onDismiss: {
+                Task { await viewModel.load() }
+            }) {
+                AddFriendView()
             }
         }
     }

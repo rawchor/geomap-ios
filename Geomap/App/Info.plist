@@ -18,6 +18,13 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_geomap-friend._tcp</string>
+		<string>_geomap-friend._udp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Geomap uses the local network to find the friend you are adding who is right next to you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Geomap uses your location to show you on the map and find nearby friends.</string>
 	<key>UIBackgroundModes</key>

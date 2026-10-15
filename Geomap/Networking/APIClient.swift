@@ -63,6 +63,29 @@ final class APIClient {
         try await send(path: "/friends", method: "GET", body: EmptyBody?.none, requiresAuth: true)
     }
 
+    func issueEncounterToken() async throws -> EncounterTokenResponse {
+        try await send(path: "/friends/encounter", method: "POST", body: EmptyBody?.none, requiresAuth: true)
+    }
+
+    func lookupEncounter(token: String) async throws -> UserProfileResponse {
+        try await send(path: "/friends/encounter/lookup", method: "POST", body: EncounterTokenRequest(token: token), requiresAuth: true)
+    }
+
+    func confirmEncounter(token: String) async throws -> FriendConfirmResponse {
+        try await send(path: "/friends/encounter/confirm", method: "POST", body: EncounterTokenRequest(token: token), requiresAuth: true)
+    }
+
+    /// 204 No Content: withdraws our pending confirmation or declines theirs.
+    func cancelPendingFriend(userId: UUID) async throws {
+        let _: EmptyResponse = try await send(
+            path: "/friends/\(userId)/pending",
+            method: "DELETE",
+            body: EmptyBody?.none,
+            requiresAuth: true,
+            allowsEmptyBody: true
+        )
+    }
+
     func nearbyFriends() async throws -> [NearbyFriendResponse] {
         try await send(path: "/friends/nearby", method: "GET", body: EmptyBody?.none, requiresAuth: true)
     }
@@ -103,6 +126,7 @@ final class APIClient {
     // MARK: - Core request/response handling
 
     private struct EmptyBody: Encodable {}
+    private struct EmptyResponse: Decodable {}
 
     private func send<Body: Encodable, Response: Decodable>(
         path: String,
