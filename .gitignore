@@ -16,3 +16,4 @@ xcuserdata/
 # XcodeGen: project.pbxproj and the shared workspace/scheme data are
 # generated from project.yml, but we keep them checked in for a clonable,
 # buildable repo without requiring xcodegen.
+Config/Local.xcconfig

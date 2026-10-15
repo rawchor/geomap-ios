@@ -7,6 +7,9 @@ options:
 configs:
   Debug: debug
   Release: release
+configFiles:
+  Debug: Config/Shared.xcconfig
+  Release: Config/Shared.xcconfig
 targets:
   Geomap:
     type: application
@@ -19,6 +22,9 @@ targets:
       properties:
         UILaunchScreen: {}
         NSLocationWhenInUseUsageDescription: "Geomap uses your location to show you on the map and find nearby friends."
+        GeomapAPIBaseURL: $(GEOMAP_API_BASE_URL)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: "Geomap uses the local network to find the friend you are adding who is right next to you."
         NSBonjourServices:
           - _geomap-friend._tcp
@@ -27,7 +33,7 @@ targets:
           - location
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.geomap.ios
+        PRODUCT_BUNDLE_IDENTIFIER: $(GEOMAP_BUNDLE_ID)
         MARKETING_VERSION: "0.1.0-SNAPSHOT"
         CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1"
