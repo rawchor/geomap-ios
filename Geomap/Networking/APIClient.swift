@@ -59,6 +59,10 @@ final class APIClient {
         try await send(path: "/location", method: "POST", body: request, requiresAuth: true)
     }
 
+    func friends() async throws -> [FriendResponse] {
+        try await send(path: "/friends", method: "GET", body: EmptyBody?.none, requiresAuth: true)
+    }
+
     func nearbyFriends() async throws -> [NearbyFriendResponse] {
         try await send(path: "/friends/nearby", method: "GET", body: EmptyBody?.none, requiresAuth: true)
     }

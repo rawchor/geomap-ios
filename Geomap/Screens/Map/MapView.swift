@@ -17,6 +17,7 @@ struct MapView: View {
     @State private var hasCenteredOnUser = false
     @State private var isShowingMyStatus = false
     @State private var isShowingConversations = false
+    @State private var isShowingSettings = false
     @AppStorage("map.useSatellite") private var useSatellite = false
     @State private var selectedCluster: MapCluster?
     @State private var pendingClusterSelection: MapPerson?
@@ -82,7 +83,7 @@ struct MapView: View {
         }
         .overlay(alignment: .topTrailing) {
             VStack(spacing: 12) {
-                logoutButton
+                settingsButton
                 messagesButton
                 mapStyleButton
             }
@@ -136,6 +137,12 @@ struct MapView: View {
         }
         .sheet(isPresented: $isShowingConversations) {
             ConversationsListView(currentUserId: currentUser.id)
+                .environmentObject(unreadStore)
+        }
+        .sheet(isPresented: $isShowingSettings, onDismiss: {
+            Task { await viewModel.refreshMyStatus() }
+        }) {
+            SettingsView(currentUser: currentUser, onLogout: { sessionStore.logout() })
                 .environmentObject(unreadStore)
         }
         .sheet(item: $selectedCluster) { cluster in
@@ -343,16 +350,16 @@ struct MapView: View {
         .disabled(currentRegion == nil)
     }
 
-    private var logoutButton: some View {
-        // Minimal placeholder until there's a dedicated settings/profile area.
+    private var settingsButton: some View {
         Button {
-            sessionStore.logout()
+            isShowingSettings = true
         } label: {
-            Image(systemName: "rectangle.portrait.and.arrow.right")
+            Image(systemName: "gearshape.fill")
                 .font(.headline)
                 .padding(10)
                 .background(.regularMaterial, in: Circle())
         }
+        .accessibilityLabel("Settings")
     }
 
     private var mapStyleButton: some View {
