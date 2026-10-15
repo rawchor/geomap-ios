@@ -1,0 +1,11 @@
+// Defaults for every build. Per-machine overrides (your Apple team, your
+// Mac's address for real-device testing) go in Config/Local.xcconfig, which
+// is gitignored — copy Config/Local.xcconfig.example to create it.
+
+// `$()` stops xcconfig treating the // in a URL as a comment.
+GEOMAP_API_BASE_URL = http:/$()/localhost:8080
+GEOMAP_BUNDLE_ID = com.geomap.ios
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+
+#include? "Local.xcconfig"

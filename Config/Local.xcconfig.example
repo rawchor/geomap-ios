@@ -1,0 +1,15 @@
+// Copy to Config/Local.xcconfig (gitignored) and edit. Then run
+// `xcodegen generate` is NOT needed — just rebuild in Xcode.
+
+// Your Apple developer Team ID (Xcode > Settings > Accounts > your team;
+// a free Apple ID's "Personal Team" works). 10 characters.
+DEVELOPMENT_TEAM = ABCDE12345
+
+// Free accounts can't reuse a bundle id someone else already registered,
+// so make this unique to you.
+GEOMAP_BUNDLE_ID = com.yourname.geomap
+
+// Your Mac's address on the Wi-Fi the phones share (run
+// `ipconfig getifaddr en0`). The backend must be listening on 0.0.0.0:8080.
+// Only used by Debug builds; Release always uses https://api.geomap.app.
+GEOMAP_API_BASE_URL = http:/$()/192.168.1.50:8080
