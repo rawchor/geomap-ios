@@ -19,6 +19,10 @@ targets:
       properties:
         UILaunchScreen: {}
         NSLocationWhenInUseUsageDescription: "Geomap uses your location to show you on the map and find nearby friends."
+        NSLocalNetworkUsageDescription: "Geomap uses the local network to find the friend you are adding who is right next to you."
+        NSBonjourServices:
+          - _geomap-friend._tcp
+          - _geomap-friend._udp
         UIBackgroundModes:
           - location
     settings:

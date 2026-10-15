@@ -46,3 +46,38 @@ struct FriendResponse: Decodable, Identifiable, Equatable {
 
     var id: UUID { userId }
 }
+
+// MARK: - Add friend (touch-to-add) — see API_CONTRACT.json /friends/encounter*
+
+struct EncounterTokenResponse: Decodable, Equatable {
+    let token: String
+    let expiresAt: Date
+}
+
+struct EncounterTokenRequest: Encodable {
+    let token: String
+}
+
+/// Profile of whoever owns an encounter code. Always fetched from the
+/// server — never taken from what a peer claims over MultipeerConnectivity.
+struct UserProfileResponse: Decodable, Equatable {
+    let userId: UUID
+    let displayName: String
+    let profilePhotoUrl: String?
+}
+
+enum FriendConfirmationStatus: String, Decodable {
+    case pending = "PENDING"
+    case confirmed = "CONFIRMED"
+}
+
+struct FriendConfirmResponse: Decodable, Equatable {
+    let userId: UUID
+    let displayName: String
+    let profilePhotoUrl: String?
+    let status: FriendConfirmationStatus
+
+    var profile: UserProfileResponse {
+        UserProfileResponse(userId: userId, displayName: displayName, profilePhotoUrl: profilePhotoUrl)
+    }
+}
