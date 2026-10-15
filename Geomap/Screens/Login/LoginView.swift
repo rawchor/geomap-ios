@@ -17,6 +17,7 @@ struct LoginView: View {
 
     private var content: some View {
         VStack(spacing: 20) {
+            OrbitLogo(size: 96)
             Text("Geomap")
                 .font(.largeTitle.bold())
 
