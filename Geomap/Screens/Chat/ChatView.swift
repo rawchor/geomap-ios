@@ -94,7 +94,7 @@ struct ChatView: View {
             Text(message.content)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .background(isMine ? Color.blue.opacity(0.85) : Color(.systemGray5), in: RoundedRectangle(cornerRadius: 16))
+                .background(isMine ? Palette.forest : Color(.systemGray5), in: RoundedRectangle(cornerRadius: 16))
                 .foregroundStyle(isMine ? .white : .primary)
             if !isMine { Spacer(minLength: 40) }
         }

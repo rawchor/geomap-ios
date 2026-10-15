@@ -26,19 +26,29 @@ struct AvatarView: View {
         .clipShape(Circle())
         .overlay {
             if let ringColor {
-                Circle().stroke(ringColor, lineWidth: max(2, diameter * 0.06))
+                Circle().stroke(ringColor, lineWidth: max(3, diameter * 0.08))
             }
         }
+        .padding(2)
+        .background(Circle().fill(Color.white))
+        .shadow(color: .black.opacity(0.4), radius: 3, y: 2)
     }
 
     private var initialsView: some View {
         Circle()
-            .fill(Color.gray.opacity(0.5))
+            .fill(fallbackColor)
             .overlay {
                 Text(initials)
                     .font(.system(size: diameter * 0.4, weight: .semibold))
                     .foregroundStyle(.white)
             }
+    }
+
+    // Stable across launches (String.hashValue is randomized per process).
+    private var fallbackColor: Color {
+        let palette: [Color] = [Palette.maroon, Palette.taupe, Palette.clay, Palette.rust]
+        let seed = displayName.unicodeScalars.reduce(0) { $0 &+ Int($1.value) }
+        return palette[seed % palette.count]
     }
 
     private var initials: String {

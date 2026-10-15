@@ -60,7 +60,7 @@ struct ConversationsListView: View {
             Spacer()
             if unreadStore.hasUnread(friendId: conversation.friendId) {
                 Circle()
-                    .fill(Color.blue)
+                    .fill(Palette.terracotta)
                     .frame(width: 10, height: 10)
             }
         }
