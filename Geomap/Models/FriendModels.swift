@@ -36,3 +36,13 @@ struct NearbyFriendResponse: Decodable, Identifiable {
 
     var id: UUID { userId }
 }
+
+/// `GET /friends` — confirmed first-degree friends only, independent of
+/// location/radius (unlike `NearbyFriendResponse`). No status or location.
+struct FriendResponse: Decodable, Identifiable, Equatable {
+    let userId: UUID
+    let displayName: String
+    let profilePhotoUrl: String?
+
+    var id: UUID { userId }
+}
