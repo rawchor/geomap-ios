@@ -294,6 +294,39 @@ struct MapView: View {
     /// tapping it "uncovers" them via ClusterMembersView instead of
     /// showing every status bubble stacked illegibly on top of each other.
     private func clusterMarker(_ cluster: MapCluster) -> some View {
+        VStack(spacing: 4) {
+            clusterStatusBubble(cluster)
+            clusterAvatars(cluster)
+        }
+    }
+
+    /// One combined bubble for everyone in the cluster who has a status,
+    /// so clustering doesn't hide statuses — still a single marker, so it
+    /// can't collide with itself the way per-person bubbles did.
+    @ViewBuilder
+    private func clusterStatusBubble(_ cluster: MapCluster) -> some View {
+        let withStatus = cluster.members.filter { $0.statusText != nil }
+        if !withStatus.isEmpty {
+            let shown = withStatus.prefix(3)
+            VStack(alignment: .leading, spacing: 2) {
+                ForEach(Array(shown)) { person in
+                    (Text(person.displayName).bold() + Text(": \(person.statusText ?? "")"))
+                        .lineLimit(1)
+                }
+                if withStatus.count > shown.count {
+                    Text("+\(withStatus.count - shown.count) more")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .font(.caption2)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+            .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
+        }
+    }
+
+    private func clusterAvatars(_ cluster: MapCluster) -> some View {
         HStack(spacing: -10) {
             ForEach(Array(cluster.members.prefix(4))) { person in
                 AvatarView(photoURL: person.photoURL, displayName: person.displayName, ringColor: person.ringColor, diameter: 30)
