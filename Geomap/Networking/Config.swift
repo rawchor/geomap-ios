@@ -12,7 +12,7 @@ enum Config {
         }
         return URL(string: "http://localhost:8080")!
         #else
-        URL(string: "https://api.geomap.app")!
+        URL(string: "https://51f00458aff5.sn.mynetname.net")!
         #endif
     }
 
